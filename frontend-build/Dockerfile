@@ -4,7 +4,7 @@ RUN apk add git npm bash
 
 VOLUME /bethsaida/frontend
 
-COPY ./build-prod.sh /
+COPY ./build-frontend.sh /
 
 #COPY ./deploy-prod.sh /
 
