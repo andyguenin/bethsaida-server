@@ -9,7 +9,8 @@ systemctl enable docker
 
 mkdir /etc/letsencrypt
 mkdir /bethsaida
-mkdir /bethsaida/frontend
+mkdir -p /bethsaida/frontend/archive
+echo '0' > /bethsaida/frontend/prod_version.txt
 mkdir /bethsaida/backend
 mkdir /bethsaida/well-known
 
