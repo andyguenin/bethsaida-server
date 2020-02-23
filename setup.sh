@@ -14,6 +14,8 @@ echo '0' > /bethsaida/frontend/prod_version.txt
 mkdir /bethsaida/backend
 mkdir /bethsaida/well-known
 
+mkdir -p /code/frontend
+
 pushd nginx
 ./build.sh
 ./run.sh

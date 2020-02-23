@@ -1,15 +1,13 @@
-if [ ! -d "code" ]; then
-	mkdir code
-fi
-
-pushd code
+pushd /code/frontend
 
 if [ -d "bethsaida-ui" ]; then
-	rm -rf bethsaida-ui
+	pushd bethsaida-ui
+	git pull origin master
+else
+	git clone https://github.com/downtowndailybread/bethsaida-ui.git
+	pushd bethsaida-ui
 fi
 
-git clone https://github.com/downtowndailybread/bethsaida-ui.git
-pushd bethsaida-ui
 prod_version=`git show-ref | grep heads/master | awk -F\  '{print $1}'`
 
 if [ ! -d "/bethsaida/frontend/archive/$prod_version" ]; then
