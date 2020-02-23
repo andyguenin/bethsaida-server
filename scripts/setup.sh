@@ -8,16 +8,28 @@ systemctl enable docker
 # rm -rf /etc/letsencrypt/*
 
 mkdir /etc/letsencrypt
-mkdir /bethsaida
 mkdir -p /bethsaida/frontend/archive
-echo '0' > /bethsaida/frontend/prod_version.txt
 mkdir /bethsaida/backend
 mkdir /bethsaida/well-known
 
 mkdir -p /code/frontend
+mkdir -p /code/backend
+mkdir -p /build/.ivy2
+mkdir -p /build/.sbt
+
+mkdir -p /db/bethsaida/prod
+mkdir -p /db/bethsaida/edge
 
 pushd nginx
 ./build.sh
+./run.sh
+popd
+
+pushd frontend-build
+./build.sh
+popd
+
+pushd postgresql
 ./run.sh
 popd
 
