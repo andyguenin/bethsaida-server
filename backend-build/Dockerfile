@@ -1,6 +1,17 @@
-from mozilla/sbt
+FROM openjdk:12
 
-RUN apt update && apt install git
+RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo && yum install -y sbt git
 
-WORKDIR ["/app"]
+COPY backend-build.sh .
+
+COPY backend-deploy.sh .
+
+VOLUME /root/.ivy2
+
+VOLUME /root/.sbt
+
+VOLUME /app
+
+VOLUME /backend
+
 
