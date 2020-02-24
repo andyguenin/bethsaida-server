@@ -28,13 +28,14 @@ chmod +x /usr/local/bin/docker-compose
 
 source /etc/environment
 
-pushd postgresql
-#./run.sh
+pushd backend-build
+./build.sh
 popd
 
-#pushd cert
-#./build.sh
-#./gen-cert.sh
-#popd
+pushd frontend-build
+./build.sh
+popd
 
 
+./scripts/backend-build.sh
+./scripts/frontend-build.sh
