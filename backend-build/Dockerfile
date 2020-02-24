@@ -12,6 +12,6 @@ VOLUME /root/.sbt
 
 VOLUME /app
 
-VOLUME /backend
+VOLUME /bethsaida/backend
 
 

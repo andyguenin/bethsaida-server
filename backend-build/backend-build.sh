@@ -10,11 +10,11 @@ fi
 
 prod_version=`git show-ref | grep heads/master | awk -F\  '{print $1}'`
 
-if [ ! -f /backend/archive/$prod_version.jar ]; then
+if [ ! -f /bethsaida/backend/archive/$prod_version.jar ]; then
         sbt assembly
-        mkdir -p /backend/archive
-        mv target/scala-2.12/ClientMonitorApi-assembly* /backend/archive/$prod_version.jar
-        echo $prod_version > /backend/latest.txt
-        ln -sfn /backend/archive/$prod_version.jar /backend/edge.jar 
+        mkdir -p /bethsaida/backend/archive
+        mv target/scala-2.12/ClientMonitorApi-assembly* /bethsaida/backend/archive/$prod_version.jar
+        echo $prod_version > /bethsaida/backend/latest.txt
+        ln -sfn /bethsaida/backend/archive/$prod_version.jar /bethsaida/backend/edge.jar 
 fi
 

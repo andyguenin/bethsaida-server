@@ -1,0 +1,13 @@
+server {
+	listen				80;
+	listen 				[::]:80;
+	server_name edge.api.bethsaida.downtowndailybread.org;
+
+	location / {
+		proxy_pass http://localhost:8091;
+	}
+	
+	location /.well-known {
+		root			/bethsaida/well-known;
+	}
+}

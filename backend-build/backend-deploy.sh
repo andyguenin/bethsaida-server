@@ -1,3 +1,3 @@
-prod_version=`cat /backend/latest.txt`
+prod_version=`cat /bethsaida/backend/latest.txt`
 
-ln -sfn /backend/archive/$prod_version.jar /backend/prod.jar
+ln -sfn /bethsaida/backend/archive/$prod_version.jar /bethsaida/backend/prod.jar

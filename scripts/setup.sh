@@ -20,17 +20,19 @@ mkdir -p /build/.sbt
 mkdir -p /db/bethsaida/prod
 mkdir -p /db/bethsaida/edge
 
-pushd nginx
-./build.sh
-./run.sh
-popd
+curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-pushd frontend-build
-./build.sh
-popd
+chmod +x /usr/local/bin/docker-compose
+
+echo 'PROD_SECRET=' >> /etc/environment
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > /etc/environment
+echo '\nEDGE_SECRET=' >> /etc/environment
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > /etc/environment
+
+source /etc/environment
 
 pushd postgresql
-./run.sh
+#./run.sh
 popd
 
 #pushd cert

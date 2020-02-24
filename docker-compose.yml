@@ -1,0 +1,36 @@
+version: '3'
+services:
+  bethsaida-nginx:
+    build: nginx
+    ports:
+    - "80:80"
+    volumes:
+    - /bethsaida/frontend:/bethsaida/frontend
+    - /etc/letsencrypt:/etc/letsencrypt
+    - /bethsaida/well-known:/bethsaida/well-known
+  postgresql-prod:
+    image: postgres
+    ports:
+    - "5432:5432"
+    volumes:
+    - /db/bethsaida/prod:/var/lib/postgresql/data
+  postgresql-edge:
+    image: postgres
+    ports:
+    - "5431:5432"
+    volumes:
+    - /db/bethsaida/edge:/var/lib/postgresql/data
+  backend-prod:
+    build: backend-run
+    ports:
+    - "8090:8090"
+    volumes:
+    - /bethsaida/backend:/bethsaida/backend
+    command: "java -cp /bethsaida/backend/prod.jar -Dsecret=${PROD_SECRET} org.downtowndailybread.bethsaida.ApiMain prod"
+  backend-edge:
+    build: backend-run
+    ports:
+    - "8091:8090"
+    volumes:
+    - /bethsaida/backend:/bethsaida/backend
+    command: "java -cp /bethsaida/backend/edge.jar -Dsecret=${EDGE_SECRET} org.downtowndailybread.bethsaida.ApiMain edge"
