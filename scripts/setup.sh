@@ -24,7 +24,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compo
 
 chmod +x /usr/local/bin/docker-compose
 
-./c.sh
+/bin/bash ./c.sh
 
 source /etc/environment
 
