@@ -24,10 +24,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compo
 
 chmod +x /usr/local/bin/docker-compose
 
-echo 'PROD_SECRET=' >> /etc/environment
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > /etc/environment
-echo '\nEDGE_SECRET=' >> /etc/environment
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > /etc/environment
+./c.sh
 
 source /etc/environment
 
