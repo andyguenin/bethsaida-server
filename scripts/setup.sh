@@ -19,14 +19,17 @@ mkdir -p /build/.sbt
 
 mkdir -p /db/bethsaida/prod
 mkdir -p /db/bethsaida/edge
+mkdir -p /db/backup
+chmod -R 777 /db/backup
 
 curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 chmod +x /usr/local/bin/docker-compose
 
-./c.sh
+/bin/bash ./c.sh
 
-source /etc/environment
+groupadd docker
+usermod -a -G docker ec2-user
 
 pushd backend-build
 ./build.sh
@@ -38,4 +41,6 @@ popd
 
 
 ./scripts/backend-build.sh
+./scripts/backend-deploy.sh
 ./scripts/frontend-build.sh
+./scripts/frontend-deploy.sh

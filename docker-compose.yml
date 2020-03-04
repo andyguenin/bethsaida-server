@@ -4,33 +4,38 @@ services:
     build: nginx
     ports:
     - "80:80"
+    - "443:443"
     volumes:
     - /bethsaida/frontend:/bethsaida/frontend
     - /etc/letsencrypt:/etc/letsencrypt
     - /bethsaida/well-known:/bethsaida/well-known
-  postgresql-prod:
+  postgres-prod:
     image: postgres
     ports:
     - "5432:5432"
     volumes:
     - /db/bethsaida/prod:/var/lib/postgresql/data
-  postgresql-edge:
+    environment:
+      POSTGRES_PASSWORD: docker
+  postgres-edge:
     image: postgres
     ports:
     - "5431:5432"
     volumes:
     - /db/bethsaida/edge:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: docker
   backend-prod:
     build: backend-run
     ports:
     - "8090:8090"
     volumes:
     - /bethsaida/backend:/bethsaida/backend
-    command: "java -cp /bethsaida/backend/prod.jar -Dsecret=${PROD_SECRET} org.downtowndailybread.bethsaida.ApiMain prod"
+    command: "java -cp /bethsaida/backend/prod.jar -Ddb.serverName=postgres-prod  -Daws.bucket=downtowndailybread-client-photo -Dsecret=${PROD_SECRET} -Daws.accessKeyId=${AWS_KEY} -Daws.secretAccessKey=${AWS_SECRET} org.downtowndailybread.bethsaida.ApiMain prod"
   backend-edge:
     build: backend-run
     ports:
     - "8091:8090"
     volumes:
     - /bethsaida/backend:/bethsaida/backend
-    command: "java -cp /bethsaida/backend/edge.jar -Dsecret=${EDGE_SECRET} org.downtowndailybread.bethsaida.ApiMain edge"
+    command: "java -cp /bethsaida/backend/edge.jar -Ddb.serverName=postgres-edge -Dsecret=${EDGE_SECRET} -Daws.bucket=downtowndailybread-client-photo-edge -Daws.accessKeyId=${AWS_KEY} -Daws.secretAccessKey=${AWS_SECRET}  org.downtowndailybread.bethsaida.ApiMain edge"

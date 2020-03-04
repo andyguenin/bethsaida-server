@@ -6,7 +6,14 @@ VOLUME /bethsaida/frontend
 
 VOLUME /bethsaida/well-known
 
-RUN mkdir /etc/nginx/conf.d.old/; mv /etc/nginx/conf.d/* /etc/nginx/conf.d.old/
+RUN rm -rf /etc/nginx/conf.d
 
-COPY conf.d /etc/nginx/conf.d
+COPY maint-mode.sh .
 
+COPY prod-mode.sh .
+
+COPY prod.d /etc/nginx/prod.d
+
+COPY maint.d /etc/nginx/maint.d
+
+RUN ln -s /etc/nginx/prod.d /etc/nginx/conf.d
