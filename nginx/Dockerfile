@@ -6,6 +6,8 @@ VOLUME /bethsaida/frontend
 
 VOLUME /bethsaida/well-known
 
+VOLUME /var/log/nginx
+
 RUN rm -rf /etc/nginx/conf.d
 
 COPY maint-mode.sh .

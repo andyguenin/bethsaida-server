@@ -17,6 +17,14 @@ mkdir -p /code/backend
 mkdir -p /build/.ivy2
 mkdir -p /build/.sbt
 
+mkdir -p /bethsaida/log
+mkdir -p /bethsaida/log/nginx
+mkdir -p /bethsaida/log/postgres/prod
+mkdir -p /bethsaida/log/postgres/edge
+mkdir -p /bethsaida/log/backend/prod
+mkdir -p /bethsaida/log/backend/edge
+
+
 mkdir -p /db/bethsaida/prod
 mkdir -p /db/bethsaida/edge
 mkdir -p /db/backup
@@ -39,8 +47,14 @@ pushd frontend-build
 ./build.sh
 popd
 
+pushd database-backup
+./build.sh
+popd
 
 ./scripts/backend-build.sh
 ./scripts/backend-deploy.sh
 ./scripts/frontend-build.sh
 ./scripts/frontend-deploy.sh
+
+
+crontab -l | { cat; echo "15 21 * * * /home/ec2-user/bethsaida-server/scripts/backup-database.sh prod true "; } | crontab -
