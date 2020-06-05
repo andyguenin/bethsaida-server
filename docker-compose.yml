@@ -31,6 +31,9 @@ services:
     - "8090:8090"
     volumes:
     - /bethsaida/backend:/bethsaida/backend
+    - /bethsaida/log/backend/prod:/bethsaida/log
+    environment:
+      LOG_DIR: /bethsaida/log
     command: "java -cp /bethsaida/backend/prod.jar -Ddb.serverName=postgres-prod  -Daws.bucket=downtowndailybread-client-photo -Dsecret=${PROD_SECRET} -Daws.accessKeyId=${AWS_KEY} -Daws.secretAccessKey=${AWS_SECRET} org.downtowndailybread.bethsaida.ApiMain prod"
   backend-edge:
     build: backend-run
@@ -38,4 +41,7 @@ services:
     - "8091:8090"
     volumes:
     - /bethsaida/backend:/bethsaida/backend
-    command: "java -cp /bethsaida/backend/edge.jar -Ddb.serverName=postgres-edge -Dsecret=${EDGE_SECRET} -Daws.bucket=downtowndailybread-client-photo-edge -Daws.accessKeyId=${AWS_KEY} -Daws.secretAccessKey=${AWS_SECRET}  org.downtowndailybread.bethsaida.ApiMain edge"
+    - /bethsaida/log/backend/edge:/bethsaida/log
+    environment:
+      LOG_DIR: /bethsaida/log
+    command: "java -cp /bethsaida/backend/edge.jar -Ddb.serverName=postgres-edge -Dsecret=${EDGE_SECRET} -Daws.bucket=downtowndailybread-client-photo -Daws.accessKeyId=${AWS_KEY} -Daws.secretAccessKey=${AWS_SECRET}  org.downtowndailybread.bethsaida.ApiMain edge"
