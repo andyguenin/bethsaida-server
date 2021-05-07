@@ -58,3 +58,4 @@ popd
 
 
 crontab -l | { cat; echo "15 21 * * * /home/ec2-user/bethsaida-server/scripts/backup-database.sh prod true "; } | crontab -
+crontab -l | { cat; echo "0 0 * * 0 /home/ec2-user/bethsaida-server/cert/renew-cert.sh >> /var/log/renew-cert.log 2>&1"; } | crontab -e
