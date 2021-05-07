@@ -37,4 +37,7 @@ then
 fi
 
 rm -rf /db/backup/*
+echo '--restart nginx'
+/usr/local/bin/docker-compose restart bethsaida-nginx
+
 popd
